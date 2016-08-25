@@ -15,7 +15,7 @@
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="" class="navbar-brand">Django E-Commerce</a>
+          <a href="{% url 'index' %}" class="navbar-brand">Django E-Commerce</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -25,18 +25,18 @@
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
             <li>
-              <a href="#">Início</a>
+              <a href="{% url 'index' %}">Início</a>
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Categorias <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="download">
-                <li><a href="">Notebooks</a></li>
-                <li><a href="">Acessórios</a></li>
-                <li><a href="">Celulares</a></li>
+                <li><a href="{% url 'product_list' %}">Notebooks</a></li>
+                <li><a href="{% url 'product_list' %}">Acessórios</a></li>
+                <li><a href="{% url 'product_list' %}">Celulares</a></li>
               </ul>
             </li>
             <li>
-                <a href="contact.html">Contato</a>
+                <a href="{% url 'contact' %}">Contato</a>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -54,9 +54,9 @@
               <div class="col-lg-12">
                 <ul class="list-unstyled">
                   <li class="pull-right"><a href="#top">Voltar ao Topo</a></li>
-                  <li><a href="">Início</a></li>
-                  <li><a href="">Produtos</a></li>
-                  <li><a href="">Contato</a></li>
+                  <li><a href="{% url 'index' %}">Início</a></li>
+                  <li><a href="{% url 'product_list' %}">Produtos</a></li>
+                  <li><a href="{% url 'contact' %}">Contato</a></li>
                   <li><a href="">Termos e Privacidade</a></li>
                 </ul>
               </div>
