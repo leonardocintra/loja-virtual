@@ -6,6 +6,9 @@ class Category(models.Model):
     created = models.DateField('Criado em', auto_now_add=True)
     modified = models.DateField('Modificado em', auto_now=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = 'Categoria'
         verbose_name_plural = 'Categorias'
@@ -20,6 +23,9 @@ class Product(models.Model):
     price = models.DecimalField('Preço', decimal_places=2, max_digits=8)
     created = models.DateField('Criado em', auto_now_add=True)
     modified = models.DateField('Modificado em', auto_now=True)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = 'Produto'
