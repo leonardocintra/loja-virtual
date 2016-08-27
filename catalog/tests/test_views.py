@@ -12,10 +12,15 @@ class ProductListIndexView(TestCase):
         self.products = mommy.make('catalog.Product', _quantity=10)
     
     def tearDown(self):
-        for p in self.products:
-            p.delete()
+        Product.objects.all().delete()
 
     def test_view_ok(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'catalog/product_list.html')
+    
+    def test_context(self):
+        response = self.client.get(self.url)
+        self.assertTrue('product_list' in response.context)
+        product_list = response.context['product_list']
+        self.assertEqual(product_list.count(), 10)
