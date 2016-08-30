@@ -1,5 +1,6 @@
 dj-database-url==0.4.1
 Django==1.10
+django-widget-tweaks==1.4.1
 gunicorn==19.6.0
 model-mommy==1.2.6
 six==1.10.0
