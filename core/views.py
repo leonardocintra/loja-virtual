@@ -9,7 +9,6 @@ from .forms import ContactForm
 class IndexView(TemplateView):
     template_name = 'index.html'
 
-
 index = IndexView.as_view()
 
 
