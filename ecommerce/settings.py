@@ -142,6 +142,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL = 'leonardo.ncintra@outlook.com'
 
 
+# Autenticacao
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
