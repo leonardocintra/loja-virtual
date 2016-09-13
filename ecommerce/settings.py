@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
 
     'core',
+    'accounts',
     'catalog',
 ]
 
@@ -145,6 +146,7 @@ DEFAULT_FROM_EMAIL = 'leonardo.ncintra@outlook.com'
 # Autenticacao
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
+AUTH_USER_MODEL = 'accounts.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
