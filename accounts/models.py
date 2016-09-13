@@ -19,3 +19,22 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField('Equipe', default=False)
     is_active = models.BooleanField('Ativo', default=True)
     date_joined = models.DateTimeField('Data de entrada', auto_now_add=True)
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
+    objects = UserManager()
+
+    class Meta:
+        verbose_name = 'Usuário'
+        verbose_name_plural = 'Usuários'
+
+    
+    def __str__(self):
+        return self.name or self.username
+    
+    def get_full_name(self):
+        return str(self)
+    
+    def get_short_name(self):
+        return str(self).split(" ")[0]
