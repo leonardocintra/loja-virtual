@@ -147,6 +147,10 @@ DEFAULT_FROM_EMAIL = 'leonardo.ncintra@outlook.com'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 AUTH_USER_MODEL = 'accounts.User'
+AUTHENTICATION_BACKENDS = (
+    'djago.contrib.auth.backends.ModelBackend',
+    'accounts.backends.ModelBackend',
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
