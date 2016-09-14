@@ -148,7 +148,7 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = (
-    'djago.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
     'accounts.backends.ModelBackend',
 )
 
