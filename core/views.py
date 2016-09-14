@@ -1,11 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.mail import send_mail
+from django.views.generic import TemplateView
 
 from .forms import ContactForm
-
-
-User = get_user_model
 
 
 class IndexView(TemplateView):

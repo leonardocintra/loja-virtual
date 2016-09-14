@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User
-from .forms import UserAdminCreateForm, UserAdminForm
+from .forms import UserAdminCreationForm, UserAdminForm
 
 
 class UserAdmin(BaseUserAdmin):
-    add_form =  UserAdminCreateForm
+    add_form =  UserAdminCreationForm
     add_fieldsets = (
         (None, {
             'fields': ('username', 'email', 'password1', 'password2')
