@@ -18,7 +18,7 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('index')
 
 
-class UpdateUserView(UpdateView):
+class UpdateUserView(LoginRequiredMixin, UpdateView):
     model = User
     template_name = 'accounts/update_user.html'
     fields = ['name', 'email', ]
