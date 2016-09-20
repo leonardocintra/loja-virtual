@@ -4,7 +4,11 @@ from django.db import models
 class CartItemManager(models.Manager):
 
     def add_item(self, cart_key, product):
-        pass
+        cart_item, created = self.get_or_create(cart_key=cart_key, product=product)
+        if not created:
+            cart_item.quantity = cart_item.quantity + 1
+            cart_item.save()
+        return cart_item
 
 
 class CartItem(models.Model):
