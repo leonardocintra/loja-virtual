@@ -1,6 +1,10 @@
 from django.db import models
 
 
+class CartItemManager(models.Manager):
+    
+
+
 class CartItem(models.Model):
     cart_key = models.CharField('Chave do carrinho', max_length=40, db_index=True) 
     product = models.ForeignKey('catalog.Product', verbose_name='Produto')
