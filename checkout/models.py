@@ -46,12 +46,27 @@ class Order(models.Model):
         verbose_name = 'Pedido'
         verbose_name_plural = 'Pedidos'
     
-
     def __str__(self):
         return 'Pedido #{}'.format(self.pk)
 
 
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, verbose_name='Pedido', related_name='items')
+    product = models.ForeignKey('catalog.Product', verbose_name='Produto')
+    quantity = models.PositiveIntegerField('Quantidade', default=1)
+    price = models.DecimalField('Preço', decimal_places=2, max_digits=8)
 
+    class Meta:
+        verbose_name = 'Item do pedido'
+        verbose_name_plural = 'Itens dos pedidos'
+    
+    def __str__(self):
+        return '[#{}] - {}'.format(self.order.pk, self.product)
+
+
+
+
+# Signals
 def post_save_cart_item(instance, **kwargs):
     if instance.quantity < 1:
         instance.delete()
