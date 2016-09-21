@@ -65,6 +65,12 @@ class OrderItem(models.Model):
 
 
 
+class OrderManager(models.Manager):
+
+    def create_order(self, user, cart_items):
+        pass
+
+
 
 # Signals
 def post_save_cart_item(instance, **kwargs):

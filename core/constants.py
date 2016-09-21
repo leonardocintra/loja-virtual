@@ -8,4 +8,5 @@ STATUS_CHOICES = (
 PAYMENT_OPTION_CHOICES = (
     ('pagseguro', 'PagSeguro'),
     ('paypal', 'Paypal'),
+    ('deposit', 'Depósito'),
 )
