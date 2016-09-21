@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import RedirectView, TemplateView
-from django.forms import modelform_factory
+from django.forms import modelformset_factory
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 
@@ -32,12 +32,12 @@ class CartItemView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CartItemView, self).get_context_data(**kwargs)
-        CartItemFormSet = modelform_factory(
-            CartItem, fields=('quantity', ), can_delete=True, extra=0
+        CartItemFormSet = modelformset_factory(
+            CartItem, fields=('quantity',), can_delete=True, extra=0
         )
         session_key = self.request.session.session_key
         if session_key:
-            context['formset'] = CartItemFormSet(queryset=CartItem.objects.filter(cart_ket=session_key))
+            context['formset'] = CartItemFormSet(queryset=CartItem.objects.filter(cart_key=session_key))
         else:
             context['formset'] = CartItemFormSet(queryset=CartItem.objects.none())
         return context
