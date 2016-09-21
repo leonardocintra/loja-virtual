@@ -33,7 +33,7 @@ class CartItemView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(CartItemView, self).get_context_data(**kwargs)
         CartItemFormSet = modelform_factory(
-            CartItem, fields=('quantity', ) can_delete=True, extra=0
+            CartItem, fields=('quantity', ), can_delete=True, extra=0
         )
         session_key = self.request.session.session_key
         if session_key:
