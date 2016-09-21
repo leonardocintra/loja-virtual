@@ -30,17 +30,36 @@ class CreateCartItemView(RedirectView):
 class CartItemView(TemplateView):
     template_name = 'checkout/cart.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(CartItemView, self).get_context_data(**kwargs)
+    def get_formset(self):
         CartItemFormSet = modelformset_factory(
             CartItem, fields=('quantity',), can_delete=True, extra=0
         )
         session_key = self.request.session.session_key
         if session_key:
-            context['formset'] = CartItemFormSet(queryset=CartItem.objects.filter(cart_key=session_key))
+            formset = CartItemFormSet(
+                queryset=CartItem.objects.filter(cart_key=session_key), 
+                data=self.request.POST or None
+            )
         else:
-            context['formset'] = CartItemFormSet(queryset=CartItem.objects.none())
+            formset = CartItemFormSet(
+                queryset=CartItem.objects.none(), 
+                data=self.request.POST or None
+            )
+        return formset
+
+
+    def get_context_data(self, **kwargs):
+        context = super(CartItemView, self).get_context_data(**kwargs)
+        context['formset'] = self.get_formset()
         return context
+    
+
+    def post(self, request, *args, **kwargs):
+        formset = self.get_formset()
+        if format.is_valid():
+            messages.success(request, 'Carrinho atualizado com sucesso')
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
          
 
 
