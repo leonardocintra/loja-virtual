@@ -50,11 +50,24 @@ class Order(models.Model):
         return 'Pedido #{}'.format(self.pk)
 
 
+class OrderManager(models.Manager):
+
+    def create_order(self, user, cart_items):
+        order = self.create(user=user)
+        for cart_item in cart_items:
+            order_item = OrderItem.objects.create(
+                order=order, quantity=cart_item.quantity, product=cart_item.product, price=cart_item.price
+            )
+        return order
+        
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, verbose_name='Pedido', related_name='items')
     product = models.ForeignKey('catalog.Product', verbose_name='Produto')
     quantity = models.PositiveIntegerField('Quantidade', default=1)
     price = models.DecimalField('Preço', decimal_places=2, max_digits=8)
+
+    objects = OrderManager()
 
     class Meta:
         verbose_name = 'Item do pedido'
@@ -63,12 +76,6 @@ class OrderItem(models.Model):
     def __str__(self):
         return '[#{}] - {}'.format(self.order.pk, self.product)
 
-
-
-class OrderManager(models.Manager):
-
-    def create_order(self, user, cart_items):
-        pass
 
 
 
