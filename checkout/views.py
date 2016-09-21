@@ -56,7 +56,7 @@ class CartItemView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         formset = self.get_formset()
-        if format.is_valid():
+        if formset.is_valid():
             messages.success(request, 'Carrinho atualizado com sucesso')
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
