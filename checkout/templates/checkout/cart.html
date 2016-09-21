@@ -53,7 +53,8 @@
                                     {% render_field form.quantity class='form-control' %}
                                 </td>
                                 <td class="text-center">
-                                    {{ form.DELETE }} <!-- formset gera o DELETE -->
+                                    <button value="on" type="button" name="{{ form.DELETE.html_name }}" class="btn btn-danger btn-sm">Remover</button>
+                                    <!-- formset gera o DELETE -->
                                 </td>
                             </tr>
                         {% endfor %}
