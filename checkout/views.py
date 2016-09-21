@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import RedirectView, TemplateView
 from django.forms import modelform_factory
 from django.contrib import messages
+from django.core.urlresolvers import reverse_lazy
 
 from catalog.models import Product
 from .models import CartItem
@@ -23,7 +24,7 @@ class CreateCartItemView(RedirectView):
             messages.success(self.request, 'Produto adicionado com sucesso!')
         else:
             messages.success(self.request, 'Quantidade do produto atualizado com sucesso!')
-        return product.get_absolute_url()
+        return reverse_lazy('checkout:cart_item')
 
 
 class CartItemView(TemplateView):
@@ -44,3 +45,4 @@ class CartItemView(TemplateView):
 
 
 create_cartitem = CreateCartItemView.as_view()
+cart_item = CartItemView.as_view()

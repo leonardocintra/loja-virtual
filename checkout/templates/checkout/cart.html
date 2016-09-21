@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load widget_tweaks %}
+
 {% block title %}
     Carrinho de compras
 {% endblock %}
@@ -7,7 +9,9 @@
 {% block container %}
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <form class="" action="">
+            <form class="" action="POST" action="">
+                {% csrf_token }
+                {{ formset.management_form }}
                 <table class="table table-bordered">
                     <thead>
                         <th>
@@ -27,45 +31,30 @@
                         </th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                10
-                            </td>
-                            <td>
-                                Curso de Django
-                            </td>
-                            <td>
-                                R$ 200
-                            </td>
-                            <td>
-                                <input type="text" name="name" value="1" class="form-control" />
-                            </td>
-                            <td class="text-center">
-                                <button name="remove" value="1" type="submit" class="btn btn-danger btn-sm">remover</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                9
-                            </td>
-                            <td>
-                                Curso de Python
-                            </td>
-                            <td>
-                                R$ 150
-                            </td>
-                            <td>
-                                <input type="text" name="name" value="1" class="form-control" />
-                            </td>
-                            <td class="text-center">
-                                <button name="remove" value="1" type="submit" class="btn btn-danger btn-sm">remover</button>
-                            </td>
-                        </tr>
+                        {% for form in formset %}
+                            <tr>
+                                <td>
+                                    {{ form.instance.product.pk }} 
+                                </td>
+                                <td>
+                                    {{ form.instance.product }}
+                                </td>
+                                <td>
+                                    R$ {{ form.instance.price|floatformat:"s" }}
+                                </td>
+                                <td>
+                                    {% render_field form.quantity class='form-control' %}
+                                </td>
+                                <td class="text-center">
+                                    {{ form.DELETE }} <!-- formset gera o DELETE -->
+                                </td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 <p class="text-right">
-                    <a href="#" class="pull-left btn btn-default">Continuar Compras</a>
-                    <button type="button" class="btn btn-primary" name="button">Atualizar Carrinho</button></li>
+                    <a href="{% url 'catalog:product_list' %}" class="pull-left btn btn-default">Continuar Compras</a>
+                    <button type="submit" class="btn btn-primary" name="button">Atualizar Carrinho</button></li>
                     <a href="" class="btn btn-success">Finalizar Compra</a>
                 </p>
             </form>
