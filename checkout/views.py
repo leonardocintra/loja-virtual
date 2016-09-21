@@ -17,9 +17,6 @@ class CreateCartItemView(RedirectView):
         if self.request.session.session_key is None:
             self.request.session.save()
         cart_item, created = CartItem.objects.add_item(self.request.session.session_key, product)
-
-        print(self.request.session)
-
         if created:
             messages.success(self.request, 'Produto adicionado com sucesso!')
         else:
