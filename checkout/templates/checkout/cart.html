@@ -7,6 +7,13 @@
 {% endblock %}
 
 {% block container %}
+    <ol class="breadcrumb">
+        <li><a href="{% url 'index' %}">Início</a></li>
+        <li class="active">Carrinho de Compras</li>
+    </ol>
+    <div class="page-header">
+        <h1>Carrinho de Compras</h1>
+    </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <form class="" action="POST" action="">
