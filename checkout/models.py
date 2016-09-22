@@ -35,6 +35,18 @@ class CartItem(models.Model):
         return '{} [{}]'.format(self.product, self.quantity)
 
 
+class OrderManager(models.Manager):
+
+    def create_order(self, user, cart_items):
+        order = self.create(user=user)
+        for cart_item in cart_items:
+            order_item = OrderItem.objects.create(
+                order=order, quantity=cart_item.quantity, product=cart_item.product,
+                price=cart_item.price
+            )
+        return order
+
+
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='Usuário')
     status = models.IntegerField('Situação', choices=STATUS_CHOICES, default=0, blank=True)
@@ -42,23 +54,14 @@ class Order(models.Model):
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
 
+    objects = OrderManager()
+
     class Meta:
         verbose_name = 'Pedido'
         verbose_name_plural = 'Pedidos'
     
     def __str__(self):
         return 'Pedido #{}'.format(self.pk)
-
-
-class OrderManager(models.Manager):
-
-    def create_order(self, user, cart_items):
-        order = self.create(user=user)
-        for cart_item in cart_items:
-            order_item = OrderItem.objects.create(
-                order=order, quantity=cart_item.quantity, product=cart_item.product, price=cart_item.price
-            )
-        return order
         
 
 class OrderItem(models.Model):
@@ -66,8 +69,6 @@ class OrderItem(models.Model):
     product = models.ForeignKey('catalog.Product', verbose_name='Produto')
     quantity = models.PositiveIntegerField('Quantidade', default=1)
     price = models.DecimalField('Preço', decimal_places=2, max_digits=8)
-
-    objects = OrderManager()
 
     class Meta:
         verbose_name = 'Item do pedido'
