@@ -77,7 +77,9 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
         else:
             messages.info(request, 'Não há items no carrinho de compras')
             return redirect('checkout:cart_item')
-        return super(CheckoutView, self).get(request, *args, **kwargs)
+        response = super(CheckoutView, self).get(request, *args, **kwargs)
+        response.context_data['order'] = order
+        return response
          
 
 
