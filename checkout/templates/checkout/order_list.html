@@ -1,0 +1,44 @@
+{% extends "accounts/index.html" %}
+
+{% load pagination %}
+
+{% block title %}
+    Meus pedidos
+{% endblock %}
+
+
+{% block accounts_container %}
+    <h2>Meus pedidos</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Produtos</th>
+                <th>Situação</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order_list %}
+                <tr>
+                    <td>
+                        <a href="#">#{{ order.pk }}</a>
+                    </td>
+                    <td>
+                        <!-- esse for é o def products(self): do model Order -->
+                        {% for product in order.products %}
+                            {{ product.name }}{% if not forloop.last %} <br/> {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {{ order.get_status_display }}
+                    </td>
+                    <td>
+                        {{ order.created|date:"d/m/Y" }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% pagination request paginator page_obj %}
+{% endblock %}
