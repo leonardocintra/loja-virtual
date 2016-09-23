@@ -22,7 +22,7 @@
             {% for order in order_list %}
                 <tr>
                     <td>
-                        <a href="#">#{{ order.pk }}</a>
+                        <a href="{% url 'checkout:order_detail' order.pk %}">#{{ order.pk }}</a>
                     </td>
                     <td>
                         <!-- esse for é o def products(self): do model Order -->
