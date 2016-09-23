@@ -68,6 +68,9 @@ class Order(models.Model):
     def products(self):
         products_ids = self.items.values_list('product')
         return Product.objects.filter(pk__in=products_ids)
+    
+    def total(self):
+        pass
         
 
 class OrderItem(models.Model):
