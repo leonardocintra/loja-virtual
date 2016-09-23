@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
-from core.constants import STATUS_CHOICES, PAYMENT_OPTION_CHOICES
+from core.constants import STATUS_CHOICES
+from core.constants import PAYMENT_OPTION_CHOICES
 from catalog.models import Product
 
 
@@ -51,7 +52,7 @@ class OrderManager(models.Manager):
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='Usuário')
     status = models.IntegerField('Situação', choices=STATUS_CHOICES, default=0, blank=True)
-    payment_option = models.CharField('Opção de pagamento', choices=PAYMENT_OPTION_CHOICES, max_length=20)
+    payment_option = models.CharField('Opção de pagamento', choices=PAYMENT_OPTION_CHOICES, max_length=20, default='deposito')
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
 
