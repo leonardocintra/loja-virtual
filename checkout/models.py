@@ -70,7 +70,13 @@ class Order(models.Model):
         return Product.objects.filter(pk__in=products_ids)
     
     def total(self):
-        pass
+        aggregate_queryset = self.items.aggregate(
+            total=models.Sum(
+                models.F('price') * models.F('quantity'),
+                output_field=models.DecimalField()
+            )
+        )
+        return aggregate_queryset['total']
         
 
 class OrderItem(models.Model):
