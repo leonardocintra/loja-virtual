@@ -165,6 +165,10 @@ MESSAGE_TAGS = {
     message_constants.ERROR: 'danger',
 }
 
+PAGSEGURO_TOKEN = 'A0DD119E8859436D967095E5F1420585'
+PAGSEGURO_EMAIL = 'leonardo_cintra1@yahoo.com.br'
+PAGSEGURO_SANDBOX = True
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 

@@ -20,7 +20,7 @@
             </p>
         </div>
         <div class="col-md-4 col-md-offset-2">
-            <a href="#" class="btn btn-success">Pagar com PagSeguro</a>
+            <a href="{% url 'checkout:pagseguro_view' order.pk %}" class="btn btn-success">Pagar com PagSeguro</a>
         </div>
         <div class="col-md-4">
             <a href="#" class="btn btn-info">Pagar com PayPal</a>
