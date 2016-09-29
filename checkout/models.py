@@ -1,4 +1,4 @@
-from pagseguro import PagSeguro
+from pagseguro import PagSeguro, Config
 from django.db import models
 from django.conf import settings
 from core.constants import STATUS_CHOICES
@@ -84,7 +84,7 @@ class Order(models.Model):
             pg = PagSeguro(
                 email=settings.PAGSEGURO_EMAIL,
                 token=settings.PAGSEGURO_TOKEN,
-                config={'sandbox': True}
+                config=Config()
             )
         else:
             pg = PagSeguro(
