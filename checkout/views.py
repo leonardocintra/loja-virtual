@@ -104,14 +104,17 @@ class PagSeguroView(LoginRequiredMixin, RedirectView):
         order = get_object_or_404(
             Order.objects.filter(user=self.request.user), pk=order_pk
         )
+
         pg = order.pagseguro()
+
+        # Configurando a URL de redirect
         pg.redirect_url = self.request.build_absolute_uri(
             reverse('checkout:order_detail', args=[order.pk])
         )
-        # pg.notification_url = self.request.build_absolute_uri(
-        #
-        # )
+
+        # Efetuando o processo de checkout
         response = pg.checkout()
+
         return response.payment_url
 
 

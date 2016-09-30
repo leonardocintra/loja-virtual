@@ -1,4 +1,4 @@
-from pagseguro import PagSeguro, Config
+from pagseguro import PagSeguro
 from django.db import models
 from django.conf import settings
 from core.constants import STATUS_CHOICES
@@ -81,22 +81,32 @@ class Order(models.Model):
     
     def pagseguro(self):
         if settings.PAGSEGURO_SANDBOX:
-            pg = PagSeguro(
+            config = {'sandbox': True}
+        else:
+            config = {}
+            
+
+        pg = PagSeguro(
                 email=settings.PAGSEGURO_EMAIL,
                 token=settings.PAGSEGURO_TOKEN,
-                config=Config()
-            )
-        else:
-            pg = PagSeguro(
-                email=settings.PAGSEGURO_EMAIL,
-                token=settings.PAGSEGURO_TOKEN
-            )
+                config=config
+        )
+        # Configurando Dados do Comprador
         pg.sender = {
-            'email': self.user.email
+            'name': self.user.name,
+            'email': self.user.email,
+            'phone': 123456,
+            
         }
-        pg.reference_prefix = None
+
+        # Configurando endereço de entrega
         pg.shipping = None
+        pg.reference_prefix = None
+        
+        # Configurando referencia
         pg.reference = self.pk
+
+        # Inserindo produtos no carrinho
         for item in self.items.all():
             pg.items.append(
                 {
@@ -105,7 +115,7 @@ class Order(models.Model):
                     'quantity': item.quantity,
                     'amount': '%.2f' % item.price
                 }
-            )
+            )        
         return pg
         
 
