@@ -5,6 +5,7 @@ from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.http import HttpResponse
 
 from catalog.models import Product
 from .models import CartItem, Order
