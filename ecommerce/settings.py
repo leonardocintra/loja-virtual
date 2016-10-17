@@ -165,7 +165,7 @@ MESSAGE_TAGS = {
     message_constants.ERROR: 'danger',
 }
 
-PAGSEGURO_TOKEN = ''
+PAGSEGURO_TOKEN = '876F0702D5034A06990AECB0568397ED'
 PAGSEGURO_EMAIL = 'leonardo_cintra1@yahoo.com.br'
 PAGSEGURO_SANDBOX = True
 

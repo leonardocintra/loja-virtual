@@ -80,23 +80,13 @@ class Order(models.Model):
         return aggregate_queryset['total']
     
     def pagseguro(self):
-        if settings.PAGSEGURO_SANDBOX:
-            config = {'sandbox': True}
-        else:
-            config = {}
-            
-
         pg = PagSeguro(
-                email=settings.PAGSEGURO_EMAIL,
-                token=settings.PAGSEGURO_TOKEN,
-                config=config
+            email=settings.PAGSEGURO_EMAIL, token=settings.PAGSEGURO_TOKEN,
+            config={'sandbox': settings.PAGSEGURO_SANDBOX}
         )
-        # Configurando Dados do Comprador
+
         pg.sender = {
-            'name': self.user.name,
-            'email': self.user.email,
-            'phone': 123456,
-            
+            'email': self.user.email
         }
 
         # Configurando endereço de entrega
