@@ -1,10 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView, TemplateView, ListView, DetailView
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy, reverse
-
 
 from catalog.models import Product
 from .models import CartItem, Order
@@ -116,6 +116,26 @@ class PagSeguroView(LoginRequiredMixin, RedirectView):
         response = pg.checkout()
 
         return response.payment_url
+
+
+@csrf_exempt
+def pagseguro_notification(request):
+    notification_code = request.POST.get('notificationCode', None)
+    if notification_code:
+        pg = PagSeguro(
+            email=settings.PAGSEGURO_EMAIL, token=settings.PAGSEGURO_TOKEN,
+            config={'sandbox': settings.PAGSEGURO_SANDBOX}
+        )
+        notification_data = pg.check_notification(notification_code)
+        status = notification_data.status
+        reference = notification_data.reference
+        try:
+            order = Order.objects.get(pk=reference)
+        except Order.DoesNotExist:
+            pass
+        else:
+            order.pagseguro_update_status(status)
+    return HttpResponse('OK')
 
 
 create_cartitem = CreateCartItemView.as_view()

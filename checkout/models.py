@@ -79,7 +79,20 @@ class Order(models.Model):
         )
         return aggregate_queryset['total']
     
+    def pagseguro_update_status(self, status):
+        if status == '3':
+            self.status = 1
+        elif status == '7':
+            self.status = 2
+        self.save()
+
+    def complete(self):
+        self.status = 1
+        self.save()
+    
     def pagseguro(self):
+        self.payment_option = 'pagseguro'
+        self.save()
         pg = PagSeguro(
             email=settings.PAGSEGURO_EMAIL, token=settings.PAGSEGURO_TOKEN,
             config={'sandbox': settings.PAGSEGURO_SANDBOX}
@@ -91,7 +104,7 @@ class Order(models.Model):
 
         # Configurando endereço de entrega
         pg.shipping = None
-        pg.reference_prefix = None
+        pg.reference_prefix = ''
         
         # Configurando referencia
         pg.reference = self.pk
