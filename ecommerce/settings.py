@@ -169,6 +169,9 @@ PAGSEGURO_TOKEN = '876F0702D5034A06990AECB0568397ED'
 PAGSEGURO_EMAIL = 'leonardo_cintra1@yahoo.com.br'
 PAGSEGURO_SANDBOX = True
 
+PAYPAL_TEXT = True
+PAYPAL_EMAIL = PAGSEGURO_EMAIL
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
