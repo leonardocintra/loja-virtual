@@ -97,19 +97,12 @@ class Order(models.Model):
             email=settings.PAGSEGURO_EMAIL, token=settings.PAGSEGURO_TOKEN,
             config={'sandbox': settings.PAGSEGURO_SANDBOX}
         )
-
         pg.sender = {
             'email': self.user.email
         }
-
-        # Configurando endereço de entrega
-        pg.shipping = None
         pg.reference_prefix = ''
-        
-        # Configurando referencia
+        pg.shipping = None
         pg.reference = self.pk
-
-        # Inserindo produtos no carrinho
         for item in self.items.all():
             pg.items.append(
                 {
@@ -118,7 +111,7 @@ class Order(models.Model):
                     'quantity': item.quantity,
                     'amount': '%.2f' % item.price
                 }
-            )        
+            )
         return pg
         
 
