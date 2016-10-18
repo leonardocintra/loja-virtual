@@ -39,8 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # Libs
     'widget_tweaks',
+    'paypal.standard.ipn',
 
+    # Apps
     'core',
     'accounts',
     'catalog',
@@ -170,7 +174,7 @@ PAGSEGURO_EMAIL = 'leonardo_cintra1@yahoo.com.br'
 PAGSEGURO_SANDBOX = True
 
 PAYPAL_TEXT = True
-PAYPAL_EMAIL = PAGSEGURO_EMAIL
+PAYPAL_EMAIL = 'leonardo.ncintra@outlook.com'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
