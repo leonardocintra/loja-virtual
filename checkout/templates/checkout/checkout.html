@@ -23,7 +23,7 @@
             <a href="{% url 'checkout:pagseguro_view' order.pk %}" class="btn btn-success">Pagar com PagSeguro</a>
         </div>
         <div class="col-md-4">
-            <a href="#" class="btn btn-info">Pagar com PayPal</a>
+            <a href="{% url 'checkout:paypal_view' order.pk %}" class="btn btn-info">Pagar com PayPal</a>
         </div>
     </div>
 {% endblock %}
