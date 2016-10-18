@@ -139,7 +139,7 @@ def pagseguro_notification(request):
             pass
         else:
             order.pagseguro_update_status(status)
-    return HttpResponse('Transação OK')
+    return HttpResponse('Transaction OK')
 
 
 create_cartitem = CreateCartItemView.as_view()
