@@ -1,3 +1,4 @@
+from pagseguro import PagSeguro
 from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView, TemplateView, ListView, DetailView
@@ -5,6 +6,7 @@ from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.conf import settings
 from django.http import HttpResponse
 
 from catalog.models import Product
@@ -119,8 +121,12 @@ class PagSeguroView(LoginRequiredMixin, RedirectView):
 @csrf_exempt
 def pagseguro_notification(request):
     notification_code = request.POST.get('notificationCode', None)
+    print('----------------------')
+    print(notification_code)
+    print('----------------------')
+
     if notification_code:
-        pg = PagSeguro(
+        pg = PagSeguro (
             email=settings.PAGSEGURO_EMAIL, token=settings.PAGSEGURO_TOKEN,
             config={'sandbox': settings.PAGSEGURO_SANDBOX}
         )
