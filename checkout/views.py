@@ -6,7 +6,9 @@ from paypal.standard.ipn.signals import valid_ipn_received
 
 from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import RedirectView, TemplateView, ListView, DetailView
+from django.views.generic import (
+    RedirectView, TemplateView, ListView, DetailView
+)
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,6 +22,7 @@ from .models import CartItem, Order
 
 
 class CreateCartItemView(RedirectView):
+    """ View para adicionar item no carrinho """
 
     def get_redirect_url(self, *args, **kwargs):
         product = get_object_or_404(Product, slug=self.kwargs['slug'])
@@ -35,8 +38,9 @@ class CreateCartItemView(RedirectView):
 
 
 class CartItemView(TemplateView):
+    """ View que visualiza o carrinho de compas """
+
     template_name = 'checkout/cart.html'
-    
 
     def get_formset(self, clear=False):
         CartItemFormSet = modelformset_factory(
@@ -48,7 +52,7 @@ class CartItemView(TemplateView):
                 formset = CartItemFormSet(queryset=CartItem.objects.filter(cart_key=session_key))
             else:
                 formset = CartItemFormSet(
-                    queryset=CartItem.objects.filter(cart_key=session_key), 
+                    queryset=CartItem.objects.filter(cart_key=session_key),
                     data=self.request.POST or None
                 )
         else:
@@ -60,7 +64,7 @@ class CartItemView(TemplateView):
         context = super(CartItemView, self).get_context_data(**kwargs)
         context['formset'] = self.get_formset()
         return context
-    
+
 
     def post(self, request, *args, **kwargs):
         formset = self.get_formset()
@@ -144,6 +148,7 @@ def pagseguro_notification(request):
 
 
 class PaypalView(LoginRequiredMixin, TemplateView):
+
     template_name = 'checkout/paypal.html'
 
     def get_context_data(self, **kwargs):
@@ -159,9 +164,9 @@ class PaypalView(LoginRequiredMixin, TemplateView):
         paypal_dict['cancel_return'] = self.request.build_absolute_uri(
             reverse('checkout:order_list')
         )
-        paypal_dict['notify_url'] = self.request.build_absolute_uri(
-            reverse('paypal-ipn')
-        )
+        #paypal_dict['notify_url'] = self.request.build_absolute_uri(
+        #    reverse('paypal-ipn', )
+        #)
         context['form'] = PayPalPaymentsForm(initial=paypal_dict)
         return context
 
@@ -175,6 +180,10 @@ def paypal_notification(sender, **kwargs):
             order.complete()
         except Order.DoesNotExist:
             pass
+
+valid_ipn_received.connect(paypal_notification)
+
+
 
 
 create_cartitem = CreateCartItemView.as_view()

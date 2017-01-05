@@ -16,13 +16,15 @@ class CartItemManager(models.Manager):
             cart_item.save()
         else:
             create = True
-            cart_item = CartItem.objects.create(cart_key=cart_key, product=product, price=product.price)            
-        
+            cart_item = CartItem.objects.create(cart_key=cart_key, product=product,
+                                                price=product.price)
         return cart_item, create
 
 
 class CartItem(models.Model):
-    cart_key = models.CharField('Chave do carrinho', max_length=40, db_index=True) 
+    """ Model Item do Carrinho """
+
+    cart_key = models.CharField('Chave do carrinho', max_length=40, db_index=True)
     product = models.ForeignKey('catalog.Product', verbose_name='Produto')
     quantity = models.PositiveIntegerField('Quantidade', default=1)
     price = models.DecimalField('Preço', decimal_places=2, max_digits=8)
@@ -33,7 +35,7 @@ class CartItem(models.Model):
         verbose_name = 'Item do carrinho'
         verbose_name_plural = 'Itens dos Carrinhos'
         unique_together = (('cart_key', 'product'), )
-    
+
     def __str__(self):
         return '{} [{}]'.format(self.product, self.quantity)
 
@@ -51,9 +53,12 @@ class OrderManager(models.Manager):
 
 
 class Order(models.Model):
+    """ Model Order """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='Usuário')
     status = models.IntegerField('Situação', choices=STATUS_CHOICES, default=0, blank=True)
-    payment_option = models.CharField('Opção de pagamento', choices=PAYMENT_OPTION_CHOICES, max_length=20, default='deposito')
+    payment_option = models.CharField('Opção de pagamento', choices=PAYMENT_OPTION_CHOICES,
+                                      max_length=20, default='deposito')
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
 
@@ -62,14 +67,14 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Pedido'
         verbose_name_plural = 'Pedidos'
-    
+
     def __str__(self):
         return 'Pedido #{}'.format(self.pk)
 
     def products(self):
         products_ids = self.items.values_list('product')
         return Product.objects.filter(pk__in=products_ids)
-    
+
     def total(self):
         aggregate_queryset = self.items.aggregate(
             total=models.Sum(
@@ -78,7 +83,7 @@ class Order(models.Model):
             )
         )
         return aggregate_queryset['total']
-    
+
     def pagseguro_update_status(self, status):
         if status == '3':
             self.status = 1
@@ -89,8 +94,9 @@ class Order(models.Model):
     def complete(self):
         self.status = 1
         self.save()
-    
+
     def pagseguro(self):
+        """ Monta os objetos do PagSeguro """
         self.payment_option = 'pagseguro'
         self.save()
         pg = PagSeguro(
@@ -113,8 +119,10 @@ class Order(models.Model):
                 }
             )
         return pg
-    
+
     def paypal(self):
+        """ Monta os objetos do Paypal """
+
         self.payment_option = 'paypal'
         self.save()
         paypal_dict = {
@@ -132,9 +140,11 @@ class Order(models.Model):
             paypal_dict['quantity_{}'.format(index)] = item.quantity
             index = index + 1
         return paypal_dict
-        
+
 
 class OrderItem(models.Model):
+    """ Model Item do pedido """
+    
     order = models.ForeignKey(Order, verbose_name='Pedido', related_name='items')
     product = models.ForeignKey('catalog.Product', verbose_name='Produto')
     quantity = models.PositiveIntegerField('Quantidade', default=1)
@@ -143,7 +153,7 @@ class OrderItem(models.Model):
     class Meta:
         verbose_name = 'Item do pedido'
         verbose_name_plural = 'Itens dos pedidos'
-    
+
     def __str__(self):
         return '[#{}] - {}'.format(self.order.pk, self.product)
 
