@@ -173,7 +173,7 @@ PAGSEGURO_TOKEN = '876F0702D5034A06990AECB0568397ED'
 PAGSEGURO_EMAIL = 'leonardo_cintra1@yahoo.com.br'
 PAGSEGURO_SANDBOX = True
 
-PAYPAL_TEXT = True
+PAYPAL_TEST = True
 PAYPAL_EMAIL = 'leonardo.ncintra@outlook.com'
 
 # Static files (CSS, JavaScript, Images)
