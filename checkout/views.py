@@ -77,6 +77,7 @@ class CartItemView(TemplateView):
 
 
 class CheckoutView(LoginRequiredMixin, TemplateView):
+    """ Checkout View - visualização do carrinho de compras """
     template_name = 'checkout/checkout.html'
 
     def get(self, request, *args, **kwargs):
@@ -86,6 +87,7 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
             order = Order.objects.create_order(
                 user=request.user, cart_items=cart_items
             )
+            cart_items.delete()
         else:
             messages.info(request, 'Não há items no carrinho de compras')
             return redirect('checkout:cart_item')

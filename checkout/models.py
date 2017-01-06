@@ -56,6 +56,7 @@ class OrderManager(models.Manager):
     """ Pedidos Manager """
 
     def create_order(self, user, cart_items):
+        """ gera um pedido """
         order = self.create(user=user)
         for cart_item in cart_items:
             order_item = OrderItem.objects.create(
