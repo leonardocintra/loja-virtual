@@ -164,14 +164,16 @@ class PaypalView(LoginRequiredMixin, TemplateView):
         paypal_dict['cancel_return'] = self.request.build_absolute_uri(
             reverse('checkout:order_list')
         )
-        #paypal_dict['notify_url'] = self.request.build_absolute_uri(
-        #    reverse('paypal-ipn', )
-        #)
+        paypal_dict['notify_url'] = self.request.build_absolute_uri(
+            reverse('paypal-ipn', )
+        )
         context['form'] = PayPalPaymentsForm(initial=paypal_dict)
         return context
 
 
 def paypal_notification(sender, **kwargs):
+    """ Retorno da notificação do Paypal """
+
     ipn_obj = sender
     if ipn_obj.payment_status == ST_PP_COMPLETED and \
         ipn_obj.receiver_email == settings.PAYPAL_EMAIL:

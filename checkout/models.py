@@ -1,3 +1,13 @@
+"""
+
+    Model Checkout
+
+    Autor: Leonardo Nascimento Cintra
+    Data: 10/2016
+    Description: nesse arquivo consta os dados que administra/grava informações de checkout
+
+"""
+
 from pagseguro import PagSeguro
 from django.db import models
 from django.conf import settings
@@ -7,8 +17,10 @@ from catalog.models import Product
 
 
 class CartItemManager(models.Manager):
+    """ Carrinho Manager """
 
     def add_item(self, cart_key, product):
+        """ Adiciona o item no carrinho """
         if self.filter(cart_key=cart_key, product=product).exists():
             create = False
             cart_item = self.get(cart_key=cart_key, product=product)
@@ -41,6 +53,7 @@ class CartItem(models.Model):
 
 
 class OrderManager(models.Manager):
+    """ Pedidos Manager """
 
     def create_order(self, user, cart_items):
         order = self.create(user=user)
@@ -72,10 +85,12 @@ class Order(models.Model):
         return 'Pedido #{}'.format(self.pk)
 
     def products(self):
+        """ retorna a lista de produtos """
         products_ids = self.items.values_list('product')
         return Product.objects.filter(pk__in=products_ids)
 
     def total(self):
+        """ get Total da compra """
         aggregate_queryset = self.items.aggregate(
             total=models.Sum(
                 models.F('price') * models.F('quantity'),
@@ -85,6 +100,7 @@ class Order(models.Model):
         return aggregate_queryset['total']
 
     def pagseguro_update_status(self, status):
+        """ Altera o status do pedido conforme o DE/PARA do status do PagSeguro """
         if status == '3':
             self.status = 1
         elif status == '7':
@@ -92,6 +108,7 @@ class Order(models.Model):
         self.save()
 
     def complete(self):
+        """ Alterar o status para completo (sucesso) """
         self.status = 1
         self.save()
 
@@ -122,7 +139,6 @@ class Order(models.Model):
 
     def paypal(self):
         """ Monta os objetos do Paypal """
-
         self.payment_option = 'paypal'
         self.save()
         paypal_dict = {
@@ -144,7 +160,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     """ Model Item do pedido """
-    
+
     order = models.ForeignKey(Order, verbose_name='Pedido', related_name='items')
     product = models.ForeignKey('catalog.Product', verbose_name='Produto')
     quantity = models.PositiveIntegerField('Quantidade', default=1)
@@ -162,6 +178,8 @@ class OrderItem(models.Model):
 
 # Signals
 def post_save_cart_item(instance, **kwargs):
+    """ Apos salvar o carrinho de compras faz as ações abaixo """
+
     if instance.quantity < 1:
         instance.delete()
 

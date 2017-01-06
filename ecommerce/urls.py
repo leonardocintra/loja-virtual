@@ -1,3 +1,5 @@
+""" URLS Ecommerce """
+
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
@@ -13,5 +15,7 @@ urlpatterns = [
     url(r'^catalogo/', include('catalog.urls', namespace='catalog')),
     url(r'^conta/', include('accounts.urls', namespace='accounts')),
     url(r'^compras/', include('checkout.urls', namespace='checkout')),
+    url(r'^paypal/', include('paypal.standard.ipn.urls')),
     url(r'^admin/', admin.site.urls),
+
 ]
