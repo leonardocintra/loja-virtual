@@ -97,12 +97,6 @@ DATABASES = {
     }
 }
 
-# Update database configuration with $DATABASE_URL.
-DATABASES['default'].update(dj_database_url.config())
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 ALLOWED_HOSTS = ['*']
 
 
@@ -180,4 +174,7 @@ PAYPAL_EMAIL = 'leonardo.ncintra@outlook.com'
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
