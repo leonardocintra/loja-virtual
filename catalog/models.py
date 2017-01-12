@@ -27,6 +27,7 @@ class Product(models.Model):
     price = models.DecimalField('Preço', decimal_places=2, max_digits=8)
     created = models.DateField('Criado em', auto_now_add=True)
     modified = models.DateField('Modificado em', auto_now=True)
+    image = models.ImageField('Imagem', upload_to='products', blank=True, null=True)
 
     def __str__(self):
         return self.name
