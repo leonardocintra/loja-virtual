@@ -180,7 +180,7 @@ PAYPAL_EMAIL = 'leonardo.ncintra@outlook.com'
 # Thumbnails
 THUMBNAIL_ALIASES = {
     '': {
-        'product_image': {'size': (285, 160), 'crop': True},
+        'product_image': {'size': (350, 250), 'crop': True},
     },
 }
 
