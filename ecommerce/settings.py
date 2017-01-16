@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Libs
     'widget_tweaks',
     'paypal.standard.ipn',
+    'easy_thumbnails',
 
     # Apps
     'core',
@@ -175,6 +176,13 @@ PAGSEGURO_SANDBOX = True
 
 PAYPAL_TEST = True
 PAYPAL_EMAIL = 'leonardo.ncintra@outlook.com'
+
+# Thumbnails
+THUMBNAIL_ALIASES = {
+    '': {
+        'product_image': {'size': (285, 160), 'crop': True},
+    },
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/STATIC_ROOT
