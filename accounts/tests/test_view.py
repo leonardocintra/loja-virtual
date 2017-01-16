@@ -15,8 +15,8 @@ class RegisterViewTestCase(TestCase):
     def test_register_ok(self):
         data = {
             'username': 'leonardo', 
-            'password1': 'teste123', 
-            'password2': 'teste123',
+            'password1': 'MagazineLuiza123!@#', 
+            'password2': 'MagazineLuiza123!@#',
             'email': 'test@teste.com'
         }
         response = self.client.post(self.register_url, data)
@@ -25,7 +25,7 @@ class RegisterViewTestCase(TestCase):
         self.assertEqual(User.objects.count(), 1)
     
     def test_register_error(self):
-        data = {'username': 'leonardo', 'password1': 'teste123', 'password2': 'teste123'}
+        data = {'username': 'leonardo', 'password1': 'MagazineLuiza123!@#', 'password2': 'MagazineLuiza123!@#'}
         response = self.client.post(self.register_url, data)
         self.assertFormError(response, 'form', 'email', 'Este campo é obrigatório.')
 
@@ -75,8 +75,8 @@ class UpdatePasswordTestCase(TestCase):
 
     def test_update_password_ok(self):
         # tem que olhar na documentação do Django o PasswordChangeForm (views.py)
-        data = {'old_password': '123', 'new_password1': 'teste123', 'new_password2': 'teste123'}
+        data = {'old_password': '123', 'new_password1': 'MagazineLuiza123!@#', 'new_password2': 'MagazineLuiza123!@#'}
         self.client.login(username=self.user.username, password='123')
         response = self.client.post(self.url, data)
         self.user.refresh_from_db()
-        self.assertTrue(self.user.check_password('teste123'))
+        self.assertTrue(self.user.check_password('MagazineLuiza123!@#'))
