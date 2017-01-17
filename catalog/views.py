@@ -1,8 +1,8 @@
 """
-        **** View - Catalog ****
-        Description:
-        Author: Leonardo Nascimento Cintra
-        Created: Out/2016
+    **** View - Catalog ****
+    Description:
+    Author: Leonardo Nascimento Cintra
+    Created: Out/2016
 """
 
 from django.shortcuts import render, get_object_or_404
@@ -26,7 +26,6 @@ class ProductListView(generic.ListView):
         q = self.request.GET.get('q', '')
         if q:
             """ 
-
             esse é o jeito mais simples de fazer uma busca
             porem nao funciona certos recursos.
             A melhor forma é usar uma lib chamada watson 
@@ -38,7 +37,7 @@ class ProductListView(generic.ListView):
                 models.Q(description__icontains=q)
             )
             """
-
+            
             queryset = watson.filter(
                 queryset, q
             )
