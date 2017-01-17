@@ -26,6 +26,12 @@ Antes de executar o `buildwatson` precisa registrar as lib (ja esta resgistrada 
 
 [Duvidas leia a documentação](https://github.com/etianen/django-watson/wiki)
 
+### Heroku Watson
+```
+python manage.py installwatson
+python manage.py buildwatson
+```
+
 
 ## Autor
 Leonardo Nascimento Cintra - leonardo.ncintra@outlook.com
