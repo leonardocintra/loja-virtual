@@ -1,9 +1,19 @@
+"""
+        **** View - Catalog ****
+        Description:
+        Author: Leonardo Nascimento Cintra
+        Created: Out/2016
+"""
+
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.db import models
+from django.views.decorators.cache import cache_page
+
 from watson import search as watson
 
 from .models import Product, Category
+
 
 class ProductListView(generic.ListView):
     
@@ -50,8 +60,9 @@ class CategoryListView(generic.ListView):
         return context
 
 
-
+@cache_page(60)
 def product(request, slug):
+    """ product: mostra os produtos com cache de 60 segundos """
     product = Product.objects.get(slug=slug)
     context = {
         'product': product
