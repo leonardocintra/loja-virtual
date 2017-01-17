@@ -27,7 +27,7 @@
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
             <li>
-              <a href="{% url 'index' %}">Início</a>
+              <a href="{% url 'catalog:product_list' %}">Produtos</a>
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'catalog:product_list' %}" id="download">Categorias <span class="caret"></span></a>
@@ -41,6 +41,11 @@
                 <a href="{% url 'contact' %}">Contato</a>
             </li>
           </ul>
+          <form action="{% url 'catalog:product_list' %}" class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" name="q" class="form-control" placeholder="Pesquisar...">
+            </div>
+          </form>
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
               <li><a href="{% url 'logout' %}">Sair</a></li>
