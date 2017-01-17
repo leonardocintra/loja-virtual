@@ -33,5 +33,13 @@ python manage.py buildwatson
 ```
 
 
+## Cache
+
+Local and Heroku
+```
+python manage.py createcachetable
+```
+
+
 ## Autor
 Leonardo Nascimento Cintra - leonardo.ncintra@outlook.com
