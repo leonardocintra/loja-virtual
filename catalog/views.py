@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.db import models
+from watson import search as watson
 
 from .models import Product, Category
 
@@ -14,11 +15,24 @@ class ProductListView(generic.ListView):
         queryset = Product.objects.all()
         q = self.request.GET.get('q', '')
         if q:
+            """ 
+
+            esse é o jeito mais simples de fazer uma busca
+            porem nao funciona certos recursos.
+            A melhor forma é usar uma lib chamada watson 
+            https://github.com/etianen/django-watson/wiki
+
             queryset = queryset.filter(
                 models.Q(name__icontains=q) | 
                 models.Q(category__name__icontains=q) |
                 models.Q(description__icontains=q)
             )
+            """
+
+            queryset = watson.filter(
+                queryset, q
+            )
+
         return queryset
 
 

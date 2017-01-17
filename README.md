@@ -15,5 +15,17 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
+## Watson
+```
+manage.py installwatson
+```
+
+**Existing website data:** If you're integrating django-watson with an existing site, then you'll also want to run `./manage.py buildwatson` to index your existing data.
+
+Antes de executar o `buildwatson` precisa registrar as lib (ja esta resgistrada em catalog/apps.py)
+
+[Duvidas leia a documentação](https://github.com/etianen/django-watson/wiki)
+
+
 ## Autor
 Leonardo Nascimento Cintra - leonardo.ncintra@outlook.com
