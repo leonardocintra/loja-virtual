@@ -15,6 +15,8 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
+Make a copy of `ecommerce/settings_local_example.py` into `ecommerce/settings_local.py` to configure your local settings.
+
 ## Watson
 ```
 manage.py installwatson
