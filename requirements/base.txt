@@ -9,4 +9,4 @@ six==1.10.0
 whitenoise==3.2.1
 pagseguro==0.3.2
 django-paypal==0.3.3
-Pillow==6.2.0
+Pillow==8.1.1
